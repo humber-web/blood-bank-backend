@@ -1,104 +1,80 @@
-const { Donor } = require("../models");
-const { Op } = require("sequelize");
+// controllers/donorController.js
+const { Donor } = require('../models');
+const { validationResult } = require('express-validator');
+
+// Create Donor
+const createDonor = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const donor = await Donor.create(req.body);
+    res.status(201).json(donor);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get All Donors
+const getAllDonors = async (req, res, next) => {
+  try {
+    const donors = await Donor.findAll();
+    res.json(donors);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get Donor by ID
+const getDonorById = async (req, res, next) => {
+  try {
+    const donor = await Donor.findByPk(req.params.id);
+    if (!donor) {
+      return res.status(404).json({ error: 'Donor not found.' });
+    }
+    res.json(donor);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Update Donor
+const updateDonor = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const donor = await Donor.findByPk(req.params.id);
+    if (!donor) {
+      return res.status(404).json({ error: 'Donor not found.' });
+    }
+    await donor.update(req.body);
+    res.json(donor);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Delete Donor
+const deleteDonor = async (req, res, next) => {
+  try {
+    const donor = await Donor.findByPk(req.params.id);
+    if (!donor) {
+      return res.status(404).json({ error: 'Donor not found.' });
+    }
+    await donor.destroy();
+    res.json({ message: 'Donor deleted successfully.' });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
-  // Create a new donor
-  createDonor: async (req, res) => {
-    try {
-      const donor = await Donor.create(req.body);
-      res.status(201).json(donor);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  // Get all donors
-  getAllDonors: async (req, res) => {
-    try {
-      const donors = await Donor.findAll();
-      res.status(200).json(donors);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  // Get a donor by ID
-  getDonorById: async (req, res) => {
-    try {
-      const donor = await Donor.findByPk(req.params.id);
-      if (!donor) {
-        return res.status(404).json({ error: "Donor not found" });
-      }
-      res.status(200).json(donor);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  // Update a donor
-  updateDonor: async (req, res) => {
-    try {
-      const [updated] = await Donor.update(req.body, {
-        where: { id: req.params.id },
-      });
-      if (!updated) {
-        return res.status(404).json({ error: "Donor not found" });
-      }
-      const updatedDonor = await Donor.findByPk(req.params.id);
-      res.status(200).json(updatedDonor);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-
-  // Delete a donor
-  deleteDonor: async (req, res) => {
-    try {
-      const deleted = await Donor.destroy({
-        where: { id: req.params.id },
-      });
-      if (!deleted) {
-        return res.status(404).json({ error: "Donor not found" });
-      }
-      res.status(204).json({ message: "Donor deleted" });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-  // Send Urgent Donation Requests
-  sendUrgentRequests: async (req, res) => {
-    try {
-      const { blood_type } = req.body;
-      const donors = await Donor.findAll({ where: { blood_type } });
-
-      donors.forEach((donor) => {
-        // Send urgent donation request to donor
-        // e.g., sendEmail(donor.email, 'Urgent Donation Needed!', message);
-      });
-
-      res.status(200).json({ message: "Urgent requests sent" });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
-  // Search donors by any fields
-  searchDonors: async (req, res) => {
-    const criteria = req.query;
-
-    const query = {};
-
-    // Build the query based on the provided criteria
-    for (const [key, value] of Object.entries(criteria)) {
-      if (value) {
-        query[key] = { [Op.like]: `%${value}%` };
-      }
-    }
-
-    try {
-      const donors = await Donor.findAll({ where: query });
-      res.status(200).json(donors);
-    } catch (error) {
-      res.status(400).json({ error: "Error searching donors" });
-    }
-  },
+  createDonor,
+  getAllDonors,
+  getDonorById,
+  updateDonor,
+  deleteDonor,
 };
