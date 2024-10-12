@@ -1,13 +1,13 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Appointments', {
       id: {
-        allowNull: false,
-        primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
       },
       user_id: {
         type: Sequelize.UUID,
@@ -32,9 +32,6 @@ module.exports = {
       blood_type: {
         type: Sequelize.STRING,
         allowNull: false,
-        validate: {
-          isIn: [['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']],
-        },
       },
       appointment_date: {
         type: Sequelize.DATEONLY,
@@ -48,23 +45,21 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 'Scheduled',
-        validate: {
-          isIn: [['Scheduled', 'Completed', 'Cancelled']],
-        },
       },
       created_at: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
       updated_at: {
-        allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
     });
   },
-  async down(queryInterface, Sequelize) {
+
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Appointments');
-  }
+  },
 };
