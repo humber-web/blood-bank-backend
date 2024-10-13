@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoutes');
 const donorRoutes = require('./routes/donorRoutes');
 const bloodInventoryRoutes = require('./routes/bloodInventoryRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes'); 
+const roleRoutes = require('./routes/roleRoutes');
 const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -37,6 +38,7 @@ app.use(express.json());
 // Routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes); 
+app.use('/roles', roleRoutes);
 app.use('/donors', donorRoutes); 
 app.use('/blood-inventory', bloodInventoryRoutes);
 app.use('/appointments', appointmentRoutes);

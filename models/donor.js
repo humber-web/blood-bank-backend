@@ -35,6 +35,11 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      dateOfBirth: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+        field: 'date_of_birth',
+      },
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
