@@ -10,6 +10,7 @@ const donorRoutes = require('./routes/donorRoutes');
 const bloodInventoryRoutes = require('./routes/bloodInventoryRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes'); 
 const roleRoutes = require('./routes/roleRoutes');
+const notificationService = require('./services/notificationService'); 
 const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -59,6 +60,25 @@ sequelize.sync()
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
+
+    // Initialize the notifications schedule the job
+    // notificationService.sendAnniversaryEmails();
+
+    // Send a test email at the start of the application
+    // const testDonor = {
+    //   email: 'mariotavaresfurtado@gmail.com', // Replace with the actual email address for testing
+    //   firstName: 'Mario'
+    // };
+    // const subject = 'Test Email';
+    // const templateName = 'anniversaryTemplate'; // Use the correct template name
+    // const context = {
+    //   user: {
+    //     firstName: testDonor.firstName,
+    //   },
+    //   websiteUrl: 'http://localhost:3000/dashboard', // Replace with your website URL
+    // };
+
+    // notificationService.sendEmail(testDonor, subject, templateName, context);
   })
   .catch((err) => {
     console.error('Unable to connect to the database:', err);

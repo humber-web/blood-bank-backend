@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Happy Anniversary!</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+    .header {
+      background-color: #e74c3c; /* Red Accent */
+      padding: 20px;
+      text-align: center;
+    }
+    .header img {
+      max-width: 150px;
+      height: auto;
+    }
+    .content {
+      padding: 30px;
+      text-align: center;
+    }
+    .content h1 {
+      color: #333333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .content p {
+      color: #555555;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .cta-button {
+      background-color: #e74c3c; /* Red Accent */
+      color: #ffffff;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      display: inline-block;
+    }
+    .footer {
+      background-color: #f4f4f4;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #888888;
+    }
+    /* Responsive Styles */
+    @media only screen and (max-width: 600px) {
+      .content {
+        padding: 20px;
+      }
+      .content h1 {
+        font-size: 20px;
+      }
+      .content p {
+        font-size: 14px;
+      }
+      .cta-button {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <table class="container" cellpadding="0" cellspacing="0">
+    <!-- Header -->
+    <tr>
+      <td class="header">
+        <!-- Replace the src with your logo URL -->
+        <img src="https://via.placeholder.com/150x50?text=Blood+Bank+Logo" alt="Blood Bank Logo">
+      </td>
+    </tr>
+    <!-- Main Content -->
+    <tr>
+      <td class="content">
+        <h1>Happy Anniversary, {{user.firstName}}!</h1>
+        <p>
+          Congratulations on your anniversary with us! 🎉<br>
+          We are grateful for your continued trust and support.
+        </p>
+        <a href="{{websiteUrl}}" class="cta-button">Visit Our Website</a>
+      </td>
+    </tr>
+    <!-- Footer -->
+    <tr>
+      <td class="footer">
+        &copy; {{currentYear}} Blood Bank. All rights reserved.<br>
+        123 Blood Street, Donation City, Country<br>
+        <a href="{{unsubscribeLink}}" style="color: #e74c3c; text-decoration: none;">Unsubscribe</a>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

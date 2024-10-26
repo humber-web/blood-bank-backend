@@ -58,6 +58,7 @@ module.exports = (sequelize) => {
       sequelize,
       modelName: 'User',
       tableName: 'Users',
+      schema: 'public',
       timestamps: true,
       underscored: true,
       hooks: {
