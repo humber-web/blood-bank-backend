@@ -86,3 +86,5 @@ sequelize.sync()
 
 // Optional: Notification Scheduler
 // require('./notificationScheduler');
+
+module.exports = app;
